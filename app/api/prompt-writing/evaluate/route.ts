@@ -1,10 +1,14 @@
-import { env } from "cloudflare:workers";
 import { NextResponse } from "next/server";
 import { saveExerciseAnswer } from "@/app/lib/course-store";
 
 type D1RuntimeEnv = {
   OPENAI_API_KEY?: string;
   OPENAI_MODEL?: string;
+};
+
+const runtime: D1RuntimeEnv = {
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  OPENAI_MODEL: process.env.OPENAI_MODEL,
 };
 
 type PromptFieldKey =
@@ -43,7 +47,6 @@ type OpenAIResponse = {
   };
 };
 
-const runtime = env as unknown as D1RuntimeEnv;
 
 const fieldLabels: Record<PromptFieldKey, string> = {
   role: "الدور",

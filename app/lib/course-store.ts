@@ -1,4 +1,3 @@
-import { env } from "cloudflare:workers";
 import { assessments, exercises } from "./course-content";
 
 type D1Result<T> = { results?: T[] };
@@ -65,7 +64,10 @@ declare global {
   var __aiLeadersCourseStore: MemoryStore | undefined;
 }
 
-const runtime = env as unknown as RuntimeEnv;
+const runtime: RuntimeEnv = {
+  DB: undefined,
+  ADMIN_ACCESS_TOKEN: process.env.ADMIN_ACCESS_TOKEN,
+};
 
 function memoryStore() {
   globalThis.__aiLeadersCourseStore ??= {
